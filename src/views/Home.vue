@@ -53,27 +53,38 @@
 
     <footer class="footer">
       <div class="footer-content">
-        <div class="footer-section">
-          <h3>Контакты</h3>
-          <p>Email: info@example.com</p>
-          <p>Телефон: +7 (999) 123-45-67</p>
+        <div class="footer-logo">
+          <img :src="logo" alt="Рецепты с Башей" class="footer-logo-image">
         </div>
-        <div class="footer-section">
-          <h3>Адрес</h3>
-          <p>ул. Примерная, 123</p>
-          <p>Город, 123456</p>
-        </div>
-        <div class="footer-section">
-          <h3>Соцсети</h3>
+        
+        <div class="footer-sections-wrapper">
+          <div class="footer-sections">
+            <div class="footer-section">
+              <h3 class="footer-heading">СТРАНИЦЫ</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">ГЛАВНАЯ</a></li>
+                <li><a href="#" class="footer-link">КАТАЛОГ</a></li>
+                <li><a href="#" class="footer-link">ИЗБРАННОЕ</a></li>
+                <li><a href="#" class="footer-link">ПРОФИЛЬ</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-heading">ДОКУМЕНТАЦИЯ</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">УСЛОВИЯ ПОЛЬЗОВАТЕЛЯ</a></li>
+                <li><a href="#" class="footer-link">УСЛОВИЯ ИСПОЛЬЗОВАНИЯ</a></li>
+              </ul>
+            </div>
+          </div>
+
           <div class="social-links">
-            <a href="#" class="social-link">Facebook</a>
-            <a href="#" class="social-link">Twitter</a>
-            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link"><img :src="vkIcon" alt="VK"></a>
+            <a href="#" class="social-link"><img :src="okIcon" alt="OK"></a>
+            <a href="#" class="social-link"><img :src="telegramIcon" alt="Telegram"></a>
+            <a href="#" class="social-link"><img :src="youtubeIcon" alt="YouTube"></a>
           </div>
         </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 Все права защищены</p>
       </div>
     </footer>
   </div>
@@ -85,6 +96,10 @@ import logo from '../assets/Логотип.svg'
 import bannerImage from '../assets/Представление.png'
 import person from '../assets/person.png'
 import fav from '../assets/fav.png'
+import vkIcon from '../assets/vk.svg'
+import okIcon from '../assets/ok.svg'
+import telegramIcon from '../assets/telegram.svg'
+import youtubeIcon from '../assets/youtube.svg'
 import kartofelVarenaya from '../assets/Картошка_вареная.png'
 import kartofelMundir from '../assets/Картошка_в_мундире.png'
 import kartofelMundirSyr from '../assets/Картошка_в_мундире_с_сыром.png'
@@ -143,7 +158,7 @@ const recipes = [
 
 .header {
   background-color: #FF5722;
-  padding: 1rem 0;
+  padding: 1.2rem 0;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -165,11 +180,11 @@ const recipes = [
   display: flex;
   align-items: center;
   height: 100%;
-  min-width: 120px;
+  min-width: 150px;
 }
 
 .logo-image {
-  height: 45px;
+  height: 55px;
   width: auto;
   object-fit: contain;
   transition: transform 0.2s ease;
@@ -232,8 +247,8 @@ const recipes = [
 }
 
 .action-icon {
-  height: 28px;
-  width: 28px;
+  height: 35px;
+  width: 35px;
   object-fit: contain;
   filter: brightness(0) invert(1);
 }
@@ -279,50 +294,99 @@ const recipes = [
 }
 
 .footer {
-  background-color: #2c3e50;
-  color: white;
-  padding: 3rem 2rem 1rem;
-  margin-top: auto;
+  background-color: #FF5722;
+  padding: 3rem 0;
+  margin-top: 4rem;
 }
 
 .footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.footer-logo {
+  margin-bottom: 0;
+}
+
+.footer-logo-image {
+  height: 350px;
+  width: auto;
+  margin-left: -20px;
+}
+
+.footer-sections-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.footer-sections {
+  display: flex;
+  justify-content: flex-start;
+  gap: 4rem;
   margin-bottom: 2rem;
 }
 
-.footer-section h3 {
-  margin-bottom: 1rem;
+.footer-heading {
+  color: white;
   font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 2;
+  transition: opacity 0.2s ease;
+}
+
+.footer-link:hover {
+  opacity: 0.8;
 }
 
 .social-links {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
+  align-items: center;
 }
 
 .social-link {
-  color: white;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.2s ease;
 }
 
 .social-link:hover {
-  opacity: 1;
+  transform: scale(1.1);
 }
 
-.footer-bottom {
-  text-align: center;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
+.social-link img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 @media (max-width: 768px) {
   .header {
-    padding: 0.8rem 0;
+    padding: 1rem 0;
   }
 
   .header-content {
@@ -342,7 +406,7 @@ const recipes = [
   }
 
   .logo-image {
-    height: 35px;
+    height: 45px;
   }
 
   .user-actions {
@@ -351,13 +415,36 @@ const recipes = [
   }
 
   .action-icon {
-    height: 24px;
-    width: 24px;
+    height: 30px;
+    width: 30px;
   }
 
   .nav-container {
     flex-wrap: wrap;
     gap: 1rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-logo {
+    margin: 0 auto;
+  }
+
+  .footer-logo-image {
+    margin-left: 0;
+  }
+
+  .footer-sections {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .social-links {
+    justify-content: center;
   }
 }
 
