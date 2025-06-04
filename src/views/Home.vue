@@ -143,8 +143,11 @@ const recipes = [
 
 .header {
   background-color: #FF5722;
-  padding: 0.5rem 0;
-  position: relative;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .header-content {
@@ -155,24 +158,31 @@ const recipes = [
   justify-content: space-between;
   padding: 0 2rem;
   height: 100%;
+  gap: 2rem;
 }
 
 .logo {
   display: flex;
   align-items: center;
   height: 100%;
+  min-width: 120px;
 }
 
 .logo-image {
-  height: 50px;
+  height: 45px;
   width: auto;
   object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover .logo-image {
+  transform: scale(1.05);
 }
 
 .search-bar {
   flex-grow: 1;
   max-width: 600px;
-  margin: 0 2rem;
+  position: relative;
 }
 
 .search-input {
@@ -183,6 +193,13 @@ const recipes = [
   font-size: 1rem;
   outline: none;
   background-color: #FFF5F2;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-input:focus {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .search-input::placeholder {
@@ -192,8 +209,10 @@ const recipes = [
 
 .user-actions {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
+  min-width: 120px;
+  justify-content: flex-end;
 }
 
 .icon-button {
@@ -204,12 +223,19 @@ const recipes = [
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.icon-button:hover {
+  transform: scale(1.1);
 }
 
 .action-icon {
-  height: 30px;
-  width: 30px;
+  height: 28px;
+  width: 28px;
   object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 
 .banner-title {
@@ -296,26 +322,37 @@ const recipes = [
 
 @media (max-width: 768px) {
   .header {
-    height: auto;
-    padding: 1rem 0;
+    padding: 0.8rem 0;
   }
 
   .header-content {
-    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 0 1rem;
     gap: 1rem;
   }
 
   .search-bar {
-    margin: 1rem 0;
-    width: 100%;
+    order: 3;
+    min-width: 100%;
+    margin: 0.5rem 0;
   }
 
   .logo {
-    height: 50px;
+    min-width: auto;
   }
 
   .logo-image {
-    height: 40px;
+    height: 35px;
+  }
+
+  .user-actions {
+    min-width: auto;
+    gap: 1rem;
+  }
+
+  .action-icon {
+    height: 24px;
+    width: 24px;
   }
 
   .nav-container {
