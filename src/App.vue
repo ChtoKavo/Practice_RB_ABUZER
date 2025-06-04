@@ -1,85 +1,74 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
   <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-/* xnj */
-nav {
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  height: 100%;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #2c3e50;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-x: hidden;
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+#app {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-nav a:first-of-type {
-  border: 0;
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.router-link-active {
+  background-color: #34495e !important;
+}
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 2rem;
 }
 
 @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .main-content {
+    padding: 2rem 5%;
   }
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+@media (min-width: 1440px) {
+  .main-content {
+    padding: 2rem 10%;
   }
 }
 </style>
