@@ -8,21 +8,40 @@
         <router-link to="/favorites" class="icon-button favorites">
           <img :src="fav" class="action-icon">
         </router-link>
-        <router-link to="/auth" class="icon-button profile">
+        <router-link to="/profile" class="icon-button profile">
           <img :src="person" class="action-icon">
         </router-link>
       </div>
     </div>
   </header>
+
+  <nav class="main-nav">
+    <div class="nav-container">
+      <router-link to="/first" class="nav-link">ПЕРВОЕ</router-link>
+      <router-link to="/second" class="nav-link">ВТОРОЕ</router-link>
+      <router-link to="/desserts" class="nav-link">ДЕСЕРТЫ</router-link>
+      <router-link to="/salads" class="nav-link">САЛАТЫ</router-link>
+      <router-link to="/snacks" class="nav-link">ЗАКУСКИ</router-link>
+      <router-link to="/drinks" class="nav-link">НАПИТКИ</router-link>
+    </div>
+  </nav>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import person from '../assets/person.png'
 import fav from '../assets/fav.png'
 
 const router = useRouter()
+
+const logout = () => {
+  localStorage.removeItem('isAuthenticated')
+}
+
+const goToAuth = () => {
+  logout()
+  router.push('/auth')
+}
 </script>
 
 <style scoped>
@@ -102,6 +121,54 @@ const router = useRouter()
   width: 35px;
   object-fit: contain;
   filter: invert(15%) sepia(75%) saturate(4605%) hue-rotate(355deg) brightness(89%) contrast(101%);
+}
+
+.router-link-active .action-icon {
+  filter: invert(72%) sepia(32%) saturate(463%) hue-rotate(334deg) brightness(103%) contrast(101%);
+}
+
+.icon-button.router-link-active {
+  background-color: #FFDCB7;
+  border-radius: 50%;
+}
+
+.main-nav {
+  background-color: #FFDCB7;
+  padding: 1rem 0;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+.nav-link {
+  color: #FF5722;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+.nav-link.router-link-active {
+  color: #FF5722;
+  background-color: #FFDCB7;
+  border-radius: 20px;
+}
+
+.nav-link.router-link-exact-active {
+  color: #FF5722;
+  background-color: #FFDCB7;
+  border-radius: 20px;
 }
 
 @media (max-width: 768px) {

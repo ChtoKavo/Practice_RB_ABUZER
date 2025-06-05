@@ -8,6 +8,7 @@ import Profile from '../views/Profile.vue'
 import Recipe from '../views/Recipe.vue'
 import Auth from '../views/Auth.vue'
 import Register from '../views/Register.vue'
+import Admin from '../views/Admin.vue'
 
 // Simulated auth state (in a real app, this would be managed by a proper auth system)
 const isAuthenticated = () => {
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: Admin
     },
     {
       path: '/auth',

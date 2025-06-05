@@ -1,13 +1,7 @@
 <template>
   <div class="page">
-    <header class="header">
-      <nav class="nav">
-        <router-link to="/" class="nav-link">Главная</router-link>
-        <router-link to="/about" class="nav-link">О нас</router-link>
-        <router-link to="/contacts" class="nav-link">Контакты</router-link>
-      </nav>
-    </header>
-
+    <Header />
+    
     <main class="main-content">
       <div class="about-hero">
         <h1 class="hero-title">О нашей компании</h1>
@@ -64,33 +58,14 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Контакты</h3>
-          <p>Email: info@example.com</p>
-          <p>Телефон: +7 (999) 123-45-67</p>
-        </div>
-        <div class="footer-section">
-          <h3>Адрес</h3>
-          <p>ул. Примерная, 123</p>
-          <p>Город, 123456</p>
-        </div>
-        <div class="footer-section">
-          <h3>Соцсети</h3>
-          <div class="social-links">
-            <a href="#" class="social-link">Facebook</a>
-            <a href="#" class="social-link">Twitter</a>
-            <a href="#" class="social-link">Instagram</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 Все права защищены</p>
-      </div>
-    </footer>
+    <Footer />
   </div>
 </template>
+
+<script setup lang="ts">
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
+</script>
 
 <style scoped>
 .page {
@@ -131,6 +106,7 @@
 
 .main-content {
   padding-top: 4rem;
+  flex: 1;
 }
 
 .about-hero {
