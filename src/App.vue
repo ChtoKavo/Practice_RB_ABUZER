@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <RouterView />
+  <router-view></router-view>
 </template>
 
 <style>
@@ -18,10 +18,10 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
   line-height: 1.6;
   color: #2c3e50;
   min-height: 100vh;

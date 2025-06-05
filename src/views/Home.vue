@@ -5,21 +5,7 @@
     </div>
 
     <div class="content-wrapper">
-      <header class="header">
-        <div class="header-content">
-          <div class="search-bar">
-            <input type="text" placeholder="НАЙТИ РЕЦЕПТ" class="search-input">
-          </div>
-          <div class="user-actions">
-            <router-link to="/favorites" class="icon-button favorites">
-              <img :src="fav" class="action-icon">
-            </router-link>
-            <router-link to="/profile" class="icon-button profile">
-              <img :src="person" class="action-icon">
-            </router-link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <nav class="main-nav">
         <div class="nav-container">
@@ -35,11 +21,11 @@
       <main class="main-content">
         <h2 class="section-title">НОВЫЕ РЕЦЕПТЫ</h2>
         <div class="recipes-grid">
-          <div v-for="recipe in recipes" :key="recipe.title" class="recipe-card">
+          <div v-for="recipe in recipes" :key="recipe.id" class="recipe-card" @click="navigateToRecipe(recipe.id)">
             <div class="recipe-image-container">
               <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
               <div v-else class="recipe-image placeholder">Изображение скоро появится</div>
-              <button class="favorite-button">★</button>
+              <button class="favorite-button" @click.stop>★</button>
             </div>
             <h3 class="recipe-title">{{ recipe.title }}</h3>
             <p class="recipe-author">{{ recipe.author }}</p>
@@ -89,10 +75,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import Header from '../components/Header.vue'
 import logo from '../assets/Логотип.svg'
 import bannerImage from '../assets/Представление.png'
-import person from '../assets/person.png'
-import fav from '../assets/fav.png'
 import vkIcon from '../assets/vk.svg'
 import okIcon from '../assets/ok.svg'
 import telegramIcon from '../assets/telegram.svg'
@@ -109,20 +95,26 @@ import kartofelZapekanka from '../assets/Картофельная_запекан
 import kartofelSalat from '../assets/Салат_из_молодого_картофеля.png'
 import kartofelTushenaya from '../assets/Тушеная_картошка_с_луком.png'
 
+const router = useRouter()
+
 const recipes = [
-  { image: kartofelVarenaya, title: 'КАРТОШКА ВАРЕНАЯ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelMundir, title: 'КАРТОШКА В МУНДИРЕ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelMundirSyr, title: 'КАРТОША В МУНДИРЕ С СЫРОМ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelChips, title: 'КАРТОФЕЛЬНЫЕ ЧИПСЫ', author: 'ИЛЬИНА АННА' },
-  { title: 'КАРТОФЕЛЬНОЕ ПЮРЕ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelZhar, title: 'ЖАРЕННАЯ КАРТОШКА', author: 'ИЛЬИНА АННА' },
-  { image: kartofelDuhovka, title: 'КАРТОШКА В ДУХОВКЕ С ГРИБАМИ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelFri, title: 'КАРТОШКА ФРИ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelGarmoshka, title: 'КАРТОШКА-ГАРМОШКА', author: 'ИЛЬИНА АННА' },
-  { image: kartofelZapekanka, title: 'КАРТОФЕЛЬНАЯ ЗАПЕКАНКА С ФАРШЕМ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelSalat, title: 'САЛАТ ИЗ МОЛОДОГО КАРТОФЕЛЯ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelTushenaya, title: 'ТУШЕНАЯ КАРТОШКА С ЛУКОМ, В СМЕТАНЕ', author: 'ИЛЬИНА АННА' }
+  { id: 1, image: kartofelVarenaya, title: 'КАРТОШКА ВАРЕНАЯ', author: 'ИЛЬИНА АННА' },
+  { id: 2, image: kartofelMundir, title: 'КАРТОШКА В МУНДИРЕ', author: 'ИЛЬИНА АННА' },
+  { id: 3, image: kartofelMundirSyr, title: 'КАРТОШКА В МУНДИРЕ С СЫРОМ', author: 'ИЛЬИНА АННА' },
+  { id: 4, image: kartofelChips, title: 'КАРТОФЕЛЬНЫЕ ЧИПСЫ', author: 'ИЛЬИНА АННА' },
+  { id: 5, title: 'КАРТОФЕЛЬНОЕ ПЮРЕ', author: 'ИЛЬИНА АННА' },
+  { id: 6, image: kartofelZhar, title: 'ЖАРЕННАЯ КАРТОШКА', author: 'ИЛЬИНА АННА' },
+  { id: 7, image: kartofelDuhovka, title: 'КАРТОШКА В ДУХОВКЕ С ГРИБАМИ', author: 'ИЛЬИНА АННА' },
+  { id: 8, image: kartofelFri, title: 'КАРТОШКА ФРИ', author: 'ИЛЬИНА АННА' },
+  { id: 9, image: kartofelGarmoshka, title: 'КАРТОШКА-ГАРМОШКА', author: 'ИЛЬИНА АННА' },
+  { id: 10, image: kartofelZapekanka, title: 'КАРТОФЕЛЬНАЯ ЗАПЕКАНКА С ФАРШЕМ', author: 'ИЛЬИНА АННА' },
+  { id: 11, image: kartofelSalat, title: 'САЛАТ ИЗ МОЛОДОГО КАРТОФЕЛЯ', author: 'ИЛЬИНА АННА' },
+  { id: 12, image: kartofelTushenaya, title: 'ТУШЕНАЯ КАРТОШКА С ЛУКОМ, В СМЕТАНЕ', author: 'ИЛЬИНА АННА' }
 ]
+
+const navigateToRecipe = (recipeId: number) => {
+  router.push(`/recipe/${recipeId}`)
+}
 </script>
 
 <style scoped>
@@ -134,7 +126,7 @@ const recipes = [
 
 .hero-banner {
   width: 100%;
-  height: 400px; /* Фиксированная высота для баннера */
+  height: 400px;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -151,111 +143,6 @@ const recipes = [
   position: relative;
   z-index: 2;
   background-color: transparent;
-}
-
-.header {
-  background-color: #FF5722;
-  padding: 1.2rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  height: 100%;
-  gap: 2rem;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  min-width: 150px;
-}
-
-.logo-image {
-  height: 55px;
-  width: auto;
-  object-fit: contain;
-  transition: transform 0.2s ease;
-}
-
-.logo:hover .logo-image {
-  transform: scale(1.05);
-}
-
-.search-bar {
-  flex-grow: 1;
-  max-width: 600px;
-  position: relative;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 25px;
-  font-size: 1rem;
-  outline: none;
-  background-color: #FCE5CD;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.search-input:focus {
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.search-input::placeholder {
-  color: #FF5722;
-  font-weight: 500;
-}
-
-.user-actions {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  min-width: 120px;
-  justify-content: flex-end;
-}
-
-.icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease;
-  position: relative;
-}
-
-.icon-button:hover {
-  transform: scale(1.1);
-}
-
-.action-icon {
-  height: 35px;
-  width: 35px;
-  object-fit: contain;
-  filter: invert(15%) sepia(75%) saturate(4605%) hue-rotate(355deg) brightness(89%) contrast(101%);
-}
-
-.banner-title {
-  font-size: 3.5rem;
-  color: #FF5722;
-  font-weight: bold;
-  line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .main-nav {
@@ -381,70 +268,6 @@ const recipes = [
   object-fit: contain;
 }
 
-@media (max-width: 768px) {
-  .header {
-    padding: 1rem 0;
-  }
-
-  .header-content {
-    flex-wrap: wrap;
-    padding: 0 1rem;
-    gap: 1rem;
-  }
-
-  .search-bar {
-    order: 3;
-    min-width: 100%;
-    margin: 0.5rem 0;
-  }
-
-  .logo {
-    min-width: auto;
-  }
-
-  .logo-image {
-    height: 45px;
-  }
-
-  .user-actions {
-    min-width: auto;
-    gap: 1rem;
-  }
-
-  .action-icon {
-    height: 30px;
-    width: 30px;
-  }
-
-  .nav-container {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .footer-logo {
-    margin: 0 auto;
-  }
-
-  .footer-logo-image {
-    margin-left: 0;
-  }
-
-  .footer-sections {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-
-  .social-links {
-    justify-content: center;
-  }
-}
-
 .section-title {
   color: #8B0000;
   font-size: 24px;
@@ -467,6 +290,7 @@ const recipes = [
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
+  cursor: pointer;
 }
 
 .recipe-card:hover {
@@ -475,7 +299,7 @@ const recipes = [
 
 .recipe-image-container {
   position: relative;
-  padding-top: 75%; /* 4:3 Aspect Ratio */
+  padding-top: 75%;
   background: #f5f5f5;
 }
 
@@ -546,6 +370,29 @@ const recipes = [
   .section-title {
     font-size: 20px;
     margin: 1.5rem 0;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-logo {
+    margin: 0 auto;
+  }
+
+  .footer-logo-image {
+    margin-left: 0;
+  }
+
+  .footer-sections {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .social-links {
+    justify-content: center;
   }
 }
 </style> 

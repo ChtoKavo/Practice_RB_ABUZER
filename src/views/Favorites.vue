@@ -31,11 +31,11 @@
       <main class="main-content">
         <h1 class="page-title">ИЗБРАННЫЕ РЕЦЕПТЫ</h1>
         <div class="recipes-grid">
-          <div v-for="recipe in favoriteRecipes" :key="recipe.title" class="recipe-card">
+          <div v-for="recipe in favoriteRecipes" :key="recipe.id" class="recipe-card" @click="navigateToRecipe(recipe.id)">
             <div class="recipe-image-container">
               <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
               <div v-else class="recipe-image placeholder">Изображение скоро появится</div>
-              <button class="favorite-button active">★</button>
+              <button class="favorite-button active" @click.stop>★</button>
             </div>
             <h3 class="recipe-title">{{ recipe.title }}</h3>
             <p class="recipe-author">{{ recipe.author }}</p>
@@ -85,6 +85,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import logo from '../assets/Логотип.svg'
 import person from '../assets/person.png'
 import fav from '../assets/fav.png'
@@ -96,12 +97,18 @@ import kartofelVarenaya from '../assets/Картошка_вареная.png'
 import kartofelMundir from '../assets/Картошка_в_мундире.png'
 import kartofelMundirSyr from '../assets/Картошка_в_мундире_с_сыром.png'
 
+const router = useRouter()
+
 // Пример избранных рецептов (в реальном приложении это будет динамический список)
 const favoriteRecipes = [
-  { image: kartofelVarenaya, title: 'КАРТОШКА ВАРЕНАЯ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelMundir, title: 'КАРТОШКА В МУНДИРЕ', author: 'ИЛЬИНА АННА' },
-  { image: kartofelMundirSyr, title: 'КАРТОША В МУНДИРЕ С СЫРОМ', author: 'ИЛЬИНА АННА' }
+  { id: 1, image: kartofelVarenaya, title: 'КАРТОШКА ВАРЕНАЯ', author: 'ИЛЬИНА АННА' },
+  { id: 2, image: kartofelMundir, title: 'КАРТОШКА В МУНДИРЕ', author: 'ИЛЬИНА АННА' },
+  { id: 3, image: kartofelMundirSyr, title: 'КАРТОШКА В МУНДИРЕ С СЫРОМ', author: 'ИЛЬИНА АННА' }
 ]
+
+const navigateToRecipe = (recipeId: number) => {
+  router.push(`/recipe/${recipeId}`)
+}
 </script>
 
 <style scoped>
@@ -246,6 +253,7 @@ const favoriteRecipes = [
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
+  cursor: pointer;
 }
 
 .recipe-card:hover {

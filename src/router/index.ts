@@ -5,6 +5,14 @@ import Contacts from '../views/Contacts.vue'
 import Catalog from '../views/Catalog.vue'
 import Favorites from '../views/Favorites.vue'
 import Profile from '../views/Profile.vue'
+import Recipe from '../views/Recipe.vue'
+import Auth from '../views/Auth.vue'
+import Register from '../views/Register.vue'
+
+// Simulated auth state (in a real app, this would be managed by a proper auth system)
+const isAuthenticated = () => {
+  return localStorage.getItem('isAuthenticated') === 'true'
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +21,30 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: Auth,
+      beforeEnter: (to, from, next) => {
+        if (isAuthenticated()) {
+          next('/profile')
+        } else {
+          next()
+        }
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
+      beforeEnter: (to, from, next) => {
+        if (isAuthenticated()) {
+          next('/profile')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/catalog',
@@ -27,7 +59,14 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile
+      component: Profile,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/recipe/:id',
+      name: 'Recipe',
+      component: Recipe,
+      props: true
     },
     {
       path: '/first',
@@ -70,6 +109,19 @@ const router = createRouter({
       component: Contacts
     }
   ]
+})
+
+// Global navigation guard
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuthenticated()) {
+      next('/auth')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
