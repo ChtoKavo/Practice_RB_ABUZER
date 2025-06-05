@@ -1,9 +1,5 @@
 <template>
   <div class="page">
-    <div class="hero-banner">
-      <img :src="bannerImage" alt="Banner" class="banner-image">
-    </div>
-
     <div class="content-wrapper">
       <header class="header">
         <div class="header-content">
@@ -33,16 +29,71 @@
       </nav>
 
       <main class="main-content">
-        <h2 class="section-title">НОВЫЕ РЕЦЕПТЫ</h2>
-        <div class="recipes-grid">
-          <div v-for="recipe in recipes" :key="recipe.title" class="recipe-card">
-            <div class="recipe-image-container">
-              <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
-              <div v-else class="recipe-image placeholder">Изображение скоро появится</div>
-              <button class="favorite-button">★</button>
+        <div class="catalog-filters">
+          <div class="filter-group">
+            <h3 class="filter-title">КАТЕГОРИИ</h3>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="first">
+                ПЕРВОЕ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="second">
+                ВТОРОЕ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="desserts">
+                ДЕСЕРТЫ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="salads">
+                САЛАТЫ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="snacks">
+                ЗАКУСКИ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="drinks">
+                НАПИТКИ
+              </label>
             </div>
-            <h3 class="recipe-title">{{ recipe.title }}</h3>
-            <p class="recipe-author">{{ recipe.author }}</p>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-title">ВРЕМЯ ПРИГОТОВЛЕНИЯ</h3>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="15min">
+                ДО 15 МИНУТ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="30min">
+                15-30 МИНУТ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="60min">
+                30-60 МИНУТ
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="more60min">
+                БОЛЕЕ 60 МИНУТ
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="catalog-content">
+          <div class="recipes-grid">
+            <div v-for="recipe in recipes" :key="recipe.title" class="recipe-card">
+              <div class="recipe-image-container">
+                <img v-if="recipe.image" :src="recipe.image" :alt="recipe.title" class="recipe-image">
+                <div v-else class="recipe-image placeholder">Изображение скоро появится</div>
+                <button class="favorite-button">★</button>
+              </div>
+              <h3 class="recipe-title">{{ recipe.title }}</h3>
+              <p class="recipe-author">{{ recipe.author }}</p>
+            </div>
           </div>
         </div>
       </main>
@@ -59,10 +110,10 @@
             <div class="footer-section">
               <h3 class="footer-heading">СТРАНИЦЫ</h3>
               <ul class="footer-links">
-                <li><a href="#" class="footer-link">ГЛАВНАЯ</a></li>
-                <li><a href="#" class="footer-link">КАТАЛОГ</a></li>
-                <li><a href="#" class="footer-link">ИЗБРАННОЕ</a></li>
-                <li><a href="#" class="footer-link">ПРОФИЛЬ</a></li>
+                <li><router-link to="/" class="footer-link">ГЛАВНАЯ</router-link></li>
+                <li><router-link to="/catalog" class="footer-link">КАТАЛОГ</router-link></li>
+                <li><router-link to="/favorites" class="footer-link">ИЗБРАННОЕ</router-link></li>
+                <li><router-link to="/profile" class="footer-link">ПРОФИЛЬ</router-link></li>
               </ul>
             </div>
 
@@ -88,9 +139,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import logo from '../assets/Логотип.svg'
-import bannerImage from '../assets/Представление.png'
 import person from '../assets/person.png'
 import fav from '../assets/fav.png'
 import vkIcon from '../assets/vk.svg'
@@ -128,23 +178,8 @@ const recipes = [
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #FCE5CD;
   position: relative;
-}
-
-.hero-banner {
-  width: 100%;
-  height: 400px; /* Фиксированная высота для баннера */
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.banner-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 .content-wrapper {
@@ -167,33 +202,15 @@ const recipes = [
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0 2rem;
   height: 100%;
   gap: 2rem;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  min-width: 150px;
-}
-
-.logo-image {
-  height: 55px;
-  width: auto;
-  object-fit: contain;
-  transition: transform 0.2s ease;
-}
-
-.logo:hover .logo-image {
-  transform: scale(1.05);
-}
-
 .search-bar {
-  flex-grow: 1;
-  max-width: 600px;
+  flex-grow: 0;
+  width: 600px;
   position: relative;
 }
 
@@ -236,7 +253,6 @@ const recipes = [
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease;
-  position: relative;
 }
 
 .icon-button:hover {
@@ -250,16 +266,8 @@ const recipes = [
   filter: invert(15%) sepia(75%) saturate(4605%) hue-rotate(355deg) brightness(89%) contrast(101%);
 }
 
-.banner-title {
-  font-size: 3.5rem;
-  color: #FF5722;
-  font-weight: bold;
-  line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .main-nav {
-  background-color: #FFF5F2;
+  background-color: #FFDCB7;
   padding: 1rem 0;
 }
 
@@ -288,6 +296,136 @@ const recipes = [
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+}
+
+.catalog-filters {
+  background-color: #FFDCB7;
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.filter-group {
+  margin-bottom: 2rem;
+}
+
+.filter-group:last-child {
+  margin-bottom: 0;
+}
+
+.filter-title {
+  color: #FF5722;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.filter-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.recipe-card {
+  background: #FFDCB7;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+}
+
+.recipe-image-container {
+  position: relative;
+  padding-top: 75%;
+  background: #f5f5f5;
+}
+
+.recipe-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 14px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #FF5722;
+  font-size: 18px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.favorite-button:hover {
+  transform: scale(1.1);
+}
+
+.recipe-title {
+  padding: 1rem;
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.recipe-author {
+  padding: 0 1rem 1rem;
+  margin: 0;
+  font-size: 14px;
+  color: #666;
 }
 
 .footer {
@@ -381,11 +519,24 @@ const recipes = [
   object-fit: contain;
 }
 
-@media (max-width: 768px) {
-  .header {
-    padding: 1rem 0;
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
   }
 
+  .catalog-filters {
+    position: static;
+    margin-bottom: 2rem;
+  }
+
+  .filter-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
   .header-content {
     flex-wrap: wrap;
     padding: 0 1rem;
@@ -394,16 +545,8 @@ const recipes = [
 
   .search-bar {
     order: 3;
-    min-width: 100%;
+    width: 100%;
     margin: 0.5rem 0;
-  }
-
-  .logo {
-    min-width: auto;
-  }
-
-  .logo-image {
-    height: 45px;
   }
 
   .user-actions {
@@ -443,109 +586,10 @@ const recipes = [
   .social-links {
     justify-content: center;
   }
-}
 
-.section-title {
-  color: #8B0000;
-  font-size: 24px;
-  font-weight: bold;
-  margin: 2rem 0;
-  padding-left: 1rem;
-  border-left: 4px solid #8B0000;
-}
-
-.recipes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 0 1rem;
-}
-
-.recipe-card {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
-}
-
-.recipe-card:hover {
-  transform: translateY(-5px);
-}
-
-.recipe-image-container {
-  position: relative;
-  padding-top: 75%; /* 4:3 Aspect Ratio */
-  background: #f5f5f5;
-}
-
-.recipe-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f0f0f0;
-  color: #666;
-  font-size: 14px;
-  padding: 1rem;
-  text-align: center;
-}
-
-.favorite-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: white;
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #FF5722;
-  font-size: 18px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease;
-}
-
-.favorite-button:hover {
-  transform: scale(1.1);
-}
-
-.recipe-title {
-  padding: 1rem;
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-.recipe-author {
-  padding: 0 1rem 1rem;
-  margin: 0;
-  font-size: 14px;
-  color: #666;
-}
-
-@media (max-width: 768px) {
   .recipes-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
   }
-
-  .section-title {
-    font-size: 20px;
-    margin: 1.5rem 0;
-  }
 }
-</style> 
+</style>
